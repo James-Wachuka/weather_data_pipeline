@@ -1,25 +1,19 @@
-FROM python:3.8-slim-buster
+FROM python:3.8
 
-RUN pip install apache-airflow[google]==2.2.0 && \
-    pip install google-cloud-storage==1.43.0 && \
-    pip install google-cloud-bigquery==2.20.0 &&\
-    pip install google-auth==2.6.0 && \
-    pip install google-auth-oauthlib==0.4.6 &&\
-    pip isntall google-auth-httplib2==0.1.0
+# Install Java
+RUN apt-get update && apt-get install -y openjdk-11-jdk
 
-# Set the working directory
-WORKDIR /usr/local/airflow
+# Set environment variables
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV PYSPARK_PYTHON=python3
+ENV PYSPARK_DRIVER_PYTHON=python3
 
-# Copy the DAG file into the container
-COPY weather_dag.py /usr/local/airflow/dags/
-COPY weather_app.py /usr/local/airflow/
-COPY google_cred.json /usr/local/airflow/
+# Install PySpark and the Google Cloud libraries
+RUN pip install pyspark prefect google-cloud-storage google-cloud-bigquery
 
+# Copy the Python script to the container
+COPY my_script.py /
 
-ENV GOOGLE_CREDENTIALS=google_cred.json
+# Set the command to run the script
+CMD ["pyspark", "--driver-memory", "4g", "--executor-memory", "4g", "--conf", "spark.driver.maxResultSize=4g", "--master", "local[*]", "/my_script.py"]
 
-# Initialize Airflow database
-RUN airflow db init
-
-# Start the Airflow webserver and scheduler
-CMD ["bash", "-c", "airflow webserver -p 8080 & airflow scheduler"]
