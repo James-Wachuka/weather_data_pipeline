@@ -27,7 +27,7 @@ Update the bucket_name and table_name variables in the write_weather_data_to_gcs
 To run the pipeline, follow these steps:
 Open a terminal window and navigate to the project directory.
 Build the Docker image using the following command: docker build -t weather-data-pipeline .
-Run the Docker container using the following command: docker run --rm -it -v $(pwd):/app -e GOOGLE_APPLICATION_CREDENTIALS=/app/your-credentials.json weather-data-pipeline
+Run the Docker container using the following command: docker run ```--rm -it -v $(pwd):/app -e GOOGLE_APPLICATION_CREDENTIALS=/app/your-credentials.json weather-data-pipeline```
 Note: Replace your-credentials.json with the name of your Google Cloud Platform service account key file.
 The pipeline will run and the output data will be written to the Google Cloud Storage bucket and BigQuery table you specified in the configuration step.
 ##### Troubleshooting
