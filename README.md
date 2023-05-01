@@ -2,7 +2,7 @@
 This is a PySpark-based data pipeline that fetches weather data for a few cities, performs some basic processing and transformation on the data, and then writes the processed data to a Google Cloud Storage bucket and a BigQuery table.The data is then viewed in a looker dashboard 
 
 ##### link to looker dashboard
-<iframe width="600" height="450" src="https://lookerstudio.google.com/embed/reporting/c2119762-c552-4cda-a5b6-2e8de78bfa7b/page/wojOD" frameborder="0" style="border:0" allowfullscreen></iframe>
+[weather_data_chart](https://lookerstudio.google.com/embed/reporting/c2119762-c552-4cda-a5b6-2e8de78bfa7b/page/wojOD)
 
 ##### pipeline
 ![Alt text](imgs/pipeline.png)
